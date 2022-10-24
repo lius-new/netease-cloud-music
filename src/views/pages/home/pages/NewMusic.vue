@@ -1,7 +1,14 @@
 <script setup lang="ts">
 
+import { ref } from "vue";
+import api from "../../../../api/index";
 const tags = ['全部', '华语', '欧美', '韩国', '日本']
 
+const albumList = ref<any>([]);
+
+api.get('/album/new').then(res => {
+    albumList.value = res.data.albums;
+})
 </script>
 
 <template>
@@ -16,7 +23,7 @@ const tags = ['全部', '华语', '欧美', '韩国', '日本']
     </div>
     <div class="mb-4 2xl:w-2/3 mx-auto">
         <ul class="flex flex-col gap-y-2">
-            <li class="bg-gray-200" v-for="n in 100" :key="n">{{n}}</li>
+            <li class="bg-gray-200" v-for="album in albumList" :key="album.id">{{album.name}}</li>
         </ul>
     </div>
 </template>

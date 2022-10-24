@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
+import { routes } from '../../router/routes';
+import Audio from '../../components/audio/index.vue'
+
+const lovers = ['我喜欢的音乐'];
+
 </script>
 
 <template>
@@ -7,25 +13,37 @@
             <div class="px-3 py-1">
                 <h4 class="title text-sm text-gray-500 py-2">推荐</h4>
                 <ul>
-                    <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">发现音乐</li>
-                    <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">私人SM</li>
-                    <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">MV</li>
-                    <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">朋友</li>
+                    <li v-for="option in routes.slice(0, 4)" :key="option.path"
+                        class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">
+                        <router-link :to="option.path">
+                            {{ option.text }}
+                        </router-link>
+                    </li>
                 </ul>
             </div>
             <div class="px-3 py-1">
                 <h4 class="title text-sm text-gray-500 py-2">我的音乐</h4>
                 <ul>
-                    <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">本地音乐</li>
-                    <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">下载管理</li>
-                    <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">我的音乐云盘</li>
-                    <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">我的歌手</li>
+                    <!-- <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">本地音乐</li> -->
+                    <!-- <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">下载管理</li> -->
+                    <!-- <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">我的音乐云盘</li> -->
+                    <li v-for="option in routes.slice(4, 5)" :key="option.path"
+                        class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">
+                        <router-link :to="option.path">
+                            {{ option.text }}
+                        </router-link>
+                    </li>
                 </ul>
             </div>
             <div class="px-3 py-1">
                 <h4 class="title text-sm text-gray-500 py-2">创建的歌单</h4>
                 <ul>
-                    <li class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">我喜欢的音乐</li>
+                    <li v-for="option in routes.slice(5)" :key="option.path"
+                        class="pl-2 text-sm text-gray-800 py-1 cursor-pointer">
+                        <router-link :to="option.path">
+                            {{ option.text }}
+                        </router-link>
+                    </li>
                 </ul>
             </div>
             <div class="px-3 py-1">
@@ -38,7 +56,7 @@
         </div>
         <div class="border-t h-20 flex">
             <div class="w-20 h-20 bg-slate-500">
-                播放菜单
+                <Audio />
             </div>
             <div class="flex items-center px-2 py-2 justify-between flex-auto">
                 <div class="music-msg h-full ">

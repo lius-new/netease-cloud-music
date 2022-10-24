@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import home from './views/home/index.vue'
-
+import Layout from './views/layouts/index.vue';
 </script>
 
 <template>
-  <home />
+  <Layout></Layout>
 </template>

@@ -18,3 +18,19 @@ body,
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* Chrome, Safari and Opera */
+.gray-scrollbar::-webkit-scrollbar {
+  background: transparent;
+  display: block;
+  width: 6px;
+}
+.gray-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #ccc;
+}
+
+.gray-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
