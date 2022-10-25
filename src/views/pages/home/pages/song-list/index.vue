@@ -8,7 +8,7 @@ import {
     ChevornDownIcon, PlayIcon,
 } from '../../../../../components/icons'
 
-// ref   控制弹出框
+// ref 控制弹出框
 const popover = ref<boolean>(false);
 
 const check = ref<string>('全部标签');

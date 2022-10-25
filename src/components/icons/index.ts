@@ -17,6 +17,14 @@ import CoffeeIcon from './song-list/CoffeeIcon.vue'
 import GlobeIcon from './song-list/GlobeIcon.vue'
 
 import ChartIcon from './anchor-station/ChartIcon.vue'
+import HeartIcon from './HeartIcon.vue'
+import TrashIcon from './TrashIcon.vue'
+
+import MusicIcon from './MusicIcon.vue'
+import SignalIcon from './SignalIcon.vue'
+import FriendIcon from './FriendIcon.vue'
+import UserMusicIcon from './UserMusicIcon.vue'
+import ListMusicIcon from './ListMusicIcon.vue'
 
 export {
   SearchIcon,
@@ -36,4 +44,11 @@ export {
   CoffeeIcon,
   GlobeIcon,
   ChartIcon,
+  HeartIcon,
+  TrashIcon,
+  MusicIcon,
+  SignalIcon,
+  FriendIcon,
+  UserMusicIcon,
+  ListMusicIcon,
 }

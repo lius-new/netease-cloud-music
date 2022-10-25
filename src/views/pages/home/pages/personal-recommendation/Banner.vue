@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue'
 import { changeMusicId } from '../../../../../store/index'
 import { getBanners } from "../../../../../api/server/personal-recommendation";
 
+
+const router = useRouter();
 
 const banners = ref<any>([]);
 const current = ref<number>(0);
@@ -11,7 +14,11 @@ let timer: any = 0;
 
 // 挂载的前完成轮播图数据的获取
 onBeforeMount(() =>
-    getBanners().then(res => banners.value = res)
+    getBanners().then(
+        res => {
+            banners.value = res
+        }
+    )
 )
 
 // 该事件用于自动切换轮播图
@@ -33,18 +40,21 @@ onUnmounted(() => {
 const currentUpdateClickHandler = (n: number) => {
     current.value = n;
 }
+
 const bannerClickHandler = (obj: any) => {
-    if (obj?.targetId) {
-        console.log('--开始请求--');
-        
-        console.log(obj);
-        
-        // 播放对应的音乐
-        changeMusicId(obj?.targetId);
+    if (!obj?.targetId) {
+        console.log('--未知(1)--');
+        return
     }
-
+    // 确认有id和是单曲 确定是否是当前音乐
+    if (obj?.targetType === 1) {
+        changeMusicId(obj?.targetId);
+    } else if (obj?.targetType === 1000) {
+        router.push({ path: '/songlist-detail', query: { id: obj?.targetId } })
+    } else {
+        console.log('--未知(2)--');
+    }
 }
-
 </script>
 
 <template>

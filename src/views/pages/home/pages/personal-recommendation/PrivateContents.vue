@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import { defineProps } from 'vue'
 
 const props = defineProps<{
@@ -11,7 +12,11 @@ const props = defineProps<{
     <div class="my-16">
         <div class=" py-6 pb-2 mb-2 flex border-b justify-between items-center">
             <h3 class="text-lg ">独家放送</h3>
-            <p class="text-xs text-gray-400 cursor-pointer">更多&gt;&gt;</p>
+            <p class="text-xs text-gray-400 cursor-pointer">
+                <router-link to="/private-send">
+                    更多&gt;&gt;
+                </router-link>
+            </p>
         </div>
         <div class="grid grid-cols-3 gap-4">
             <div class=" text-center w-80 h-48 " v-for=" privatecontent in props.privatecontents.value"

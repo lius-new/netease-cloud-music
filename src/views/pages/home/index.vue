@@ -5,7 +5,8 @@ import NewMusic from './pages/NewMusic.vue'
 import PersonalRecommendation from './pages/personal-recommendation/index.vue'
 import Songer from './pages/Songer.vue'
 import SongList from './pages/song-list/index.vue'
-import { ref } from 'vue'
+
+import { currentMenu, changeCurrentMenu } from '../../../store'
 
 const tabs = {
   PersonalRecommendation, SongList, AnchorStation, Leaderboard, Songer, NewMusic,
@@ -20,7 +21,6 @@ const menuListContent = [
   '最新音乐',
 ]
 
-const currentMenu = ref<string>('PersonalRecommendation');
 
 </script>
 
@@ -29,9 +29,9 @@ const currentMenu = ref<string>('PersonalRecommendation');
     <div class="content-wrapper h-12 border-b w-full mb-5">
       <ul
         class="mx-auto flex w-3/5 text-xs lg:w-1/2 xl:w-1/3 lg:text-sm h-full justify-between items-center whitespace-nowrap">
-        <li @click="currentMenu=tab" class="cursor-pointer h-full flex items-center justify-center w-20"
+        <li @click="() => {changeCurrentMenu(tab)}" class="cursor-pointer h-full flex items-center justify-center w-20"
           :class="{'border-b-2 border-red-600':currentMenu===tab}" v-for="_,tab,index in tabs" :key="tab">
-          {{menuListContent[index]}}
+          {{ menuListContent[index] }}
         </li>
       </ul>
     </div>

@@ -43,4 +43,9 @@ export const routes: IRoute[] = [
     component: pages.SongListDetail,
     text: '歌单详情',
   },
+  {
+    path: '/private-send',
+    component: pages.PrivateSend,
+    text: '独家放松',
+  },
 ]

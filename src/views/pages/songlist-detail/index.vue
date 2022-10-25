@@ -1,26 +1,27 @@
 <script setup lang="ts">
-import api from '../../../api/index'
+import { reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { ref } from 'vue'
+import { getPlaylistDetail, getPlaylistTrack } from '../../../api/server/songlist-detail'
+import { changeMusicId } from '../../../store/index'
 
+const { id } = useRoute().query;
 
-const route = useRoute();
-const { id } = route.query;
+const playListState = reactive({
+    playListDesc: ref<any>({}),
+    playList: ref<any>({})
+})
 
-const playListDesc = ref<any>({});
-const playList = ref<any>({});
+getPlaylistDetail(id as string).then(res => {
+    playListState.playListDesc = res
+})
 
-api.get(`/playlist/detail?id=${id}`)
-    .then(res => {
-        playListDesc.value = res.data
-    })
-    .catch(err => console.log(err))
+getPlaylistTrack(id as string).then(res => {
+    playListState.playList = res
+})
 
-api.get(`/playlist/track/all?id=${id}`)
-    .then(res => {
-        playList.value = res.data.songs
-    })
-    .catch(err => console.log(err))
+const handleClick = (id: string) => {
+    changeMusicId(id);
+}
 
 </script>
 
@@ -28,37 +29,37 @@ api.get(`/playlist/track/all?id=${id}`)
     <div class="content-wrapper py-6 px-10 flex-auto overflow-y-scroll no-scrollbar flex flex-col">
         <div class="flex gap-x-8">
             <div class="w-60  bg-slate-500">
-                <img :src="playList.playlist?.coverImgUrl" alt="">
+                <img :src="playListState.playListDesc.playlist?.coverImgUrl" alt="">
             </div>
             <div class="w-full ">
                 <div class="flex justify-between">
                     <p>
-                        {{playListDesc.playlist?.name}}
+                        {{ playListState.playListDesc.playlist?.name }}
                     </p>
                     <div>
 
-                        <p>{{playListDesc.playlist?.trackCount}}</p>
-                        <p>{{playListDesc.playlist?.playCount}}</p>
+                        <p>{{ playListState.playListDesc.playlist?.trackCount }}</p>
+                        <p>{{ playListState.playListDesc.playlist?.playCount }}</p>
                     </div>
                 </div>
                 <div class="flex">
-                    <div>作者:{{playListDesc.playlist?.creator.nickname}}</div>
-                    <div>{{new Date(playListDesc.playlist?.createTime)}}2020-02创建</div>
+                    <div>作者:{{ playListState.playListDesc.playlist?.creator.nickname }}</div>
+                    <div>{{ new Date(playListState.playListDesc.playlist?.createTime) }}2020-02创建</div>
                 </div>
                 <div class="flex">
                     <button>播放全部</button>
-                    <button>已收藏{{playListDesc.playlist?.subscribedCount}}</button>
-                    <button>分享{{playListDesc.playlist?.shareCount}}</button>
+                    <button>已收藏{{ playListState.playListDesc.playlist?.subscribedCount }}</button>
+                    <button>分享{{ playListState.playListDesc.playlist?.shareCount }}</button>
                 </div>
                 <div>
-                    <p>标签: {{playListDesc.playlist?.tags}}/</p>
-                    <p>简介 : {{playListDesc.playlist?.description}}</p>
+                    <p>标签: {{ playListState.playListDesc.playlist?.tags }}/</p>
+                    <p>简介 : {{ playListState.playListDesc.playlist?.description }}</p>
                 </div>
             </div>
         </div>
         <div>
-            <ul class="flex flex-col justify-center items-center gap-y-10">
-                <li v-for="n in playList" :key="n">{{n.name}}</li>
+            <ul class="flex flex-col justify-center items-center gap-y-10 hover:cursor-pointer">
+                <li @click="() => handleClick(n.id)" v-for="n in playListState.playList" :key="n">{{ n.name }}</li>
             </ul>
         </div>
     </div>
