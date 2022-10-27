@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
 })
 </script>
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" :fill="props.fill">
-        <path d="M384 256L0 32V480L384 256z" />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" :fill="props.fill">
+        <path d="M256 96V64h64V96 416v32H256V416 256L0 448V64L256 256V96z" />
     </svg>
 </template>

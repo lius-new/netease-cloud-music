@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { musicId } from '../../store/index'
 import AudioShow from './audio-show.vue';
 import { routes } from '../../router/routes';
 import ListIcon from './left-icon.vue'
@@ -87,7 +88,7 @@ const linkClickHandler = (p: string) => {
                 </ul>
             </div>
         </div>
-        <div class="border-t h-20 flex">
+        <div class="border-t flex" v-show="musicId">
             <AudioShow />
         </div>
     </div>

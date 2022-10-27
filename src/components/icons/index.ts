@@ -25,6 +25,16 @@ import SignalIcon from './SignalIcon.vue'
 import FriendIcon from './FriendIcon.vue'
 import UserMusicIcon from './UserMusicIcon.vue'
 import ListMusicIcon from './ListMusicIcon.vue'
+import ForwardIcon from './ForwardIcon.vue'
+import PauseIcon from './PauseIcon.vue'
+import VolumeHighIcon from './VolumeHighIcon.vue'
+import VolumeLowIcon from './VolumeLowIcon.vue'
+import VolumeOffIcon from './VolumeOffIcon.vue'
+
+import MusicNoteIcon from './MusicNoteIcon.vue'
+import CirclePlayIcon from './CirclePlayIcon.vue'
+import FolderPlusIcon from './FolderPlusIcon.vue'
+import ShareSquareIcon from './ShareSquareIcon.vue'
 
 export {
   SearchIcon,
@@ -51,4 +61,13 @@ export {
   FriendIcon,
   UserMusicIcon,
   ListMusicIcon,
+  ForwardIcon,
+  PauseIcon,
+  VolumeHighIcon,
+  VolumeLowIcon,
+  VolumeOffIcon,
+  MusicNoteIcon,
+  CirclePlayIcon,
+  FolderPlusIcon,
+  ShareSquareIcon,
 }

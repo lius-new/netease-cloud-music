@@ -18,8 +18,8 @@ const props = defineProps<{
         </div>
         <div class="grid grid-cols-2 border divide-x">
             <div class=" text-center h-14 " v-for="newsong, index in props.newsongs.value" :key="newsong.id">
-                <div class="flex items-center px-4 h-full hover:bg-gray-200">
-                    <p class="text-gray-500 text-sm">{{ index }}</p>
+                <div class="flex items-center px-4 gap-x-4 h-full hover:bg-gray-200 hover:cursor-pointer">
+                    <p class="text-gray-500 text-sm ">{{ index }}</p>
                     <img class="w-10 " :src="newsong.picUrl" alt="">
                     <p>
                         {{ newsong.name }}
