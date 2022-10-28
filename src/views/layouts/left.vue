@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { musicId } from '../../store/index'
+import { musicStore } from '../../store/index'
 import AudioShow from './audio-show.vue';
 import { routes } from '../../router/routes';
 import ListIcon from './left-icon.vue'
@@ -11,7 +11,6 @@ const path = ref<string>(window.location.hash.replace(/.\//, '/')) // 默认是�
 
 const linkClickHandler = (p: string) => {
     path.value = p;
-    console.log(path.value);
 }
 
 </script>
@@ -88,7 +87,7 @@ const linkClickHandler = (p: string) => {
                 </ul>
             </div>
         </div>
-        <div class="border-t flex" v-show="musicId">
+        <div class="border-t flex" v-show="musicStore.data.musicId.value">
             <AudioShow />
         </div>
     </div>

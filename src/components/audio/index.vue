@@ -1,94 +1,57 @@
 <script setup lang="ts">
-import { watch, reactive, ref } from 'vue'
+import { watch } from 'vue'
+import { checkAudioUse, getAudio } from "../../api/server/audio";
+import { musicStore, audioStore } from '../../store/index'
 import Slider from '../slider/index.vue'
-import api from "../../api/index";
 import { PlayIcon, ForwardIcon, PauseIcon, VolumeHighIcon } from '../icons/index'
-import { musicId } from '../../store/index'
 
-// url
-const url = ref<string>('');
-// 控制是否播放
-const musicToggle = ref<boolean>(false);
-// audio
-const audio = ref<HTMLAudioElement | null>(null);
-
-// 定义一个变量用于控制音量
-const volume = ref<number>(20);
-
-// 定义一个变量用于记录进度
-const progress = ref<number>(0);
-
-// 定义一个变量记录总长度
-let allTime = 0;
-
-const changeVolume = (v: number) => {
-    volume.value = v;
-}
-const changeProgress = (p: number) => {
-    progress.value = p;
-}
-
-const checker = reactive({
-    checkUse: ref<boolean>(false),
-    message: ref<any>('')
-})
+const { musicId } = musicStore.data;
+const { audio, use, time, url, toggle, volume, progress } = audioStore.data
+const { updateUse } = audioStore.update().use;
+const { updateUrl } = audioStore.update().url
+const { toggleOn, udpateToggle } = audioStore.update().toggle
+const { updateVolume } = audioStore.update().volume
+const { updateProgress } = audioStore.update().progress
+const { updateTime } = audioStore.update().time
+const { start, stop } = audioStore.update().audio;
 
 watch(musicId, () => {
-    // let musicId = { value: '1438432515' }
-    api.get(`/check/music?id=${musicId.value}`).then(res => {
-        checker.checkUse = res.data.success;
-        checker.message = res.data.message;
+    checkAudioUse(musicId.value).then(res => {
+        updateUse(res.success)
+        if (!use.value) return
+        getAudio(musicId.value).then(res => {
+            if (!res || res.length <= 0) return
+            updateUrl(res[0].url)
+            setTimeout(() => { 
+                if (!audio.value) audio.value = document.querySelector('#audio')
+                start();
+                toggleOn();
+                // 初始化的时候的声音/进度条/时长
+                updateVolume((volume.value));
+                updateProgress(progress.value);
+                updateTime(audio.value!.duration);
+            }, 5000)
+        })
+    });
 
-        if (checker.checkUse) {
-            api.get(`/song/url/v1?id=${musicId.value}&level=exhigh`).then((res) => {
-                const data = res.data.data;
-                if (data && data.length > 0) {
-                    url.value = data[0].url;
-                    musicToggle.value = true;
-                    audio.value || (audio.value = document.querySelector('#audio'));
-                    setTimeout(() => {
-                        audio.value?.play(); // 播放
-                        audio.value!.volume = volume.value / 100;
-                        audio.value!.currentTime = progress.value;
-                        allTime = audio.value!.duration; // 总时间
-                    }, 5000)
-                }
-            })
-        }
-    })
-})
+});
 
 // 播放音乐
 const toggleMusicClickHandler = () => {
-    musicToggle.value = url.value ? !musicToggle.value : false;
-
-    if (audio != null && musicToggle.value) {
-        audio.value?.play();
-    } else {
-        audio.value?.pause();
-    }
+    udpateToggle(url.value ? !toggle.value : false); // 修改播放按钮
+    if (audio && toggle.value) start();
+    else stop();
 }
-watch(volume, () => {
-    if (audio.value) {
-        audio.value!.volume = volume.value / 100;
-    }
-})
-watch(progress, () => {
-    if (audio.value) {
-        audio.value!.currentTime = progress.value / 100 * allTime;
-    }
-})
-
 </script>
 
 <template>
-    <audio id="audio" v-if="musicId && checker.checkUse" :src="url" preload='metadata'>
+    <audio id="audio" v-if="musicId && use" :src="url" preload='metadata'>
     </audio>
 
     <div class="audio-controls flex justify-center items-center">
         <div @click="toggleMusicClickHandler"
             class="relative audio-toggle flex items-center w-10 h-10 rounded-full bg-red-600 cursor-pointer">
-            <PlayIcon v-if="!musicToggle" class="w-4 mx-auto absolute left-3.5" fill="white" />
+            <PlayIcon v-if="!toggle" class="w-4 mx-auto absolute left-3.5" fill="white" />
             <PauseIcon v-else class="w-4 mx-auto absolute left-3" fill="white" />
         </div>
         <div class="audio-pre relative flex items-center mx-6 w-8 h-8 rounded-full bg-red-600 cursor-pointer">
@@ -96,13 +59,13 @@ watch(progress, () => {
         </div>
     </div>
     <div class="flex-auto px-10">
-        <Slider :value="progress" :change-value="changeProgress" width="full" />
+        <Slider :value="progress" :change-value="updateProgress" width="full" />
     </div>
 
     <div class="flex flex-2 items-center w-48 justify-around ">
         <div class="flex items-center gap-x-2">
             <VolumeHighIcon class="w-4" fill="gray" />
-            <Slider :value="volume" :change-value="changeVolume" />
+            <Slider :value="volume" :change-value="updateVolume" />
         </div>
         <div
             class="border-2 w-5 h-5 text-xs text-gray-600 flex justify-center items-center border-gray-400 cursor-pointer">

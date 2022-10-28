@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { musicMsg } from '../../store/index'
+import { musicStore } from '../../store/index'
 import { HeartIcon, TrashIcon } from '../../components/icons/index'
+const { musicMsg } = musicStore.data
 </script>
 
 <template>
@@ -10,7 +11,9 @@ import { HeartIcon, TrashIcon } from '../../components/icons/index'
     <div class="flex h-16 items-center px-2 justify-between flex-auto">
         <div class="music-msg ">
             <ul class="flex flex-col justify-around h-full">
-                <li class="font-mono text-sm  overflow-hidden" :class="{ 'hover:cursor-pointer': musicMsg.name }">{{ musicMsg.name || '选择歌曲' }}
+                <li class="font-mono text-sm  overflow-hidden" :class="{ 'hover:cursor-pointer': musicMsg.name }">{{
+                        musicMsg.name || '选择歌曲'
+                }}
                 </li>
                 <li class="text-xs" :class="{ 'hover:cursor-pointer': musicMsg.author }">{{ musicMsg.author || '' }}
                 </li>

@@ -7,7 +7,8 @@ export interface IRoute {
   text: string
 }
 
-export const routes: IRoute[] = [
+// 主要的
+const PageRoutes: IRoute[] = [
   {
     path: '/',
     component: pages.HomePages,
@@ -38,6 +39,10 @@ export const routes: IRoute[] = [
     component: pages.Lover,
     text: '我喜欢的音乐',
   },
+]
+
+// 其他页面的子页面
+const PageInnerRoutes: IRoute[] = [
   {
     path: '/songlist-detail',
     component: pages.SongListDetail,
@@ -49,3 +54,7 @@ export const routes: IRoute[] = [
     text: '独家放松',
   },
 ]
+
+// 查看所有的图标
+
+export const routes: IRoute[] = [...PageRoutes, ...PageInnerRoutes]

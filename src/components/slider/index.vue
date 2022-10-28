@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, defineProps, withDefaults } from 'vue'
-import { musicId } from '../../store/index'
+import { watch, ref, onMounted, defineProps, withDefaults } from 'vue'
+import { musicStore } from '../../store/index'
 
 const props = withDefaults(defineProps<{
     width?: string
@@ -16,10 +16,14 @@ const sliderLine = ref<HTMLElement | null>(null);
 
 let isSlider = false;
 
+watch(musicStore.data.musicId, () => {
+    if (musicStore.data.musicId) {
+        circle.value?.addEventListener('mousedown', circleMouseDownHandler);
+    }
+})
 onMounted(() => {
-    musicId.value && circle.value?.addEventListener('mousedown', circleMouseDownHandler);
-    circle.value!.style.marginLeft = props.value + "px";
-    sliderLine.value!.style.width = props.value + "px";
+    circle.value!.style.marginLeft = props.value + "px"; // 圆圈处于进度条的位置 
+    sliderLine.value!.style.width = props.value + "px"; // 进度条的长度
 });
 
 // 按下的事件
@@ -40,6 +44,7 @@ const circleMouseDownHandler = (e: Event) => {
         circle.value!.style.marginLeft = moveX + "px";
         sliderLine.value!.style.width = moveX + "px";
         let value = Math.round(Math.max(0, moveX / max) * 100); //转换成百分比
+
         if (props.changeValue) {
             props.changeValue(value);
         }

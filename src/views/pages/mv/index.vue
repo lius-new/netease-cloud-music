@@ -1,54 +1,30 @@
 <script setup lang="ts">
+import FeaturedMv from './FeaturedMv.vue'
+import AllMv from './AllMv.vue'
+import MvTopList from './MvTopList.vue';
+import { mvStore } from '../../../store/mv-store'
 
-const tags1 = ['内地', '港台', '欧美', '日本', '韩国'];
+const menu = ['Mv精选', '全部Mv']
+const tabs = { FeaturedMv, AllMv, MvTopList }
+
+const current = mvStore.data.current
 
 </script>
 
 <template>
-    <div class="content-wrapper px-10 py-4 flex-auto overflow-y-scroll no-scrollbar ">
-        <div class="flex gap-x-2 mx-auto  justify-center">
-            <button class="border px-4 py ">Mv精选</button>
-            <button class="border px-4 py ">网易出品</button>
-            <button class="border px-4 py ">全部Mv</button>
+    <div class="content-wrapper px-10 py-4 w-full overflow-y-scroll no-scrollbar ">
+        <div v-if="current != 'MvTopList'" class="flex mx-auto  justify-center">
+            <template v-for="(_, tab, index) in tabs">
+                <button v-if="index < 2" @click="() => mvStore.update().updateCurrent(tab)"
+                    class=" py-1 outline-none text-sm border px-6 border-gray-400 text-gray-500" :class="{
+                        'bg-gray-300 text-slate-700': current === tab,
+                        'rounded-tl-md rounded-bl-md': index === 0,
+                        'rounded-tr-md rounded-br-md border-l-0': index === 1
+                    }">
+                    {{ menu[index] }}
+                </button>
+            </template>
         </div>
-        <div class="2xl:w-3/4 mx-auto">
-            <div class="flex items-end justify-between border-b py-2">
-                <div class="flex gap-x-6">
-                    <h3 class="text-lg">最新MV</h3>
-                    <ul class="flex text-xs divide-x items-end">
-                        <li class="px-4 text-gray-500" v-for="tag in tags1" :key="tag">{{tag}}</li>
-                    </ul>
-                </div>
-                <div class=" text-gray-500 text-xs">更多&gt;&gt;</div>
-            </div>
-            <div class="grid grid-cols-4 gap-x-4 gap-y-6 py-4">
-                <div class="h-36 2xl:h-48 bg-slate-400" v-for="n in 8" :key="n">{{n}}</div>
-            </div>
-        </div>
-        <div class="2xl:w-3/4 mx-auto">
-            <div class="flex items-end justify-between border-b py-2">
-                <div class="flex gap-x-6">
-                    <h3 class="text-lg">热播MV</h3>
-                </div>
-                <div class=" text-gray-500 text-xs">更多&gt;&gt;</div>
-            </div>
-            <div class="grid grid-cols-4 gap-x-4 gap-y-6 py-4">
-                <div class="h-36 2xl:h-48 bg-slate-400" v-for="n in 8" :key="n">{{n}}</div>
-            </div>
-        </div>
-        <div class="2xl:w-3/4 mx-auto">
-            <div class="flex items-end justify-between border-b py-2">
-                <div class="flex gap-x-6">
-                    <h3 class="text-lg">MV排行榜</h3>
-                    <ul class="flex text-xs divide-x items-end">
-                        <li class="px-4 text-gray-500" v-for="tag in tags1" :key="tag">{{tag}}</li>
-                    </ul>
-                </div>
-                <div class=" text-gray-500 text-xs">更多&gt;&gt;</div>
-            </div>
-            <div class="grid grid-cols-2 gap-x-4 gap-y-6 py-4">
-                <div class="h-36 2xl:h-48 bg-slate-400" v-for="n in 8" :key="n">{{n}}</div>
-            </div>
-        </div>
+        <component :is="tabs[current]"></component>
     </div>
 </template>

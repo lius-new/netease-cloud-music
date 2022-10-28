@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue'
-import { changeMusicId } from '../../../../../store/index'
+import { changeCurrentMenu, musicStore } from '../../../../../store/index'
 import { getBanners } from "../../../../../api/server/personal-recommendation";
-
 
 const router = useRouter();
 
@@ -48,7 +47,7 @@ const bannerClickHandler = (obj: any) => {
     }
     // 确认有id和是单曲 确定是否是当前音乐
     if (obj?.targetType === 1) {
-        changeMusicId(obj?.targetId);
+        musicStore.update().changeMusicId(obj?.targetId);
     } else if (obj?.targetType === 1000) {
         router.push({ path: '/songlist-detail', query: { id: obj?.targetId } })
     } else {

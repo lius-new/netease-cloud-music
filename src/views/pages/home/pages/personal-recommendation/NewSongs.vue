@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { changeCurrentMenu } from '../../../../../store';
+import { homeMenuStore } from '../../../../../store';
 
 import { defineProps } from 'vue'
 
@@ -14,7 +14,8 @@ const props = defineProps<{
     <div class="my-16">
         <div class=" py-6 pb-2 mb-2 flex border-b justify-between items-center">
             <h3 class="text-lg ">最新音乐</h3>
-            <p @click="() => changeCurrentMenu('NewMusic')" class="text-xs text-gray-400 cursor-pointer">更多&gt;&gt;</p>
+            <p @click="() => homeMenuStore.update().changeCurrentMenu('NewMusic')"
+                class="text-xs text-gray-400 cursor-pointer">更多&gt;&gt;</p>
         </div>
         <div class="grid grid-cols-2 border divide-x">
             <div class=" text-center h-14 " v-for="newsong, index in props.newsongs.value" :key="newsong.id">

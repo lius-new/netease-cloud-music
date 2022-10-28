@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import { formatWanToTenThousand, getYearMonthDay, getTime } from '../../../utils/index'
 import { MusicNoteIcon, CirclePlayIcon, FolderPlusIcon, ShareSquareIcon, HeartIcon } from '../../../components/icons/index'
 import { getPlaylistDetail, getPlaylistTrack } from '../../../api/server/songlist-detail'
-import { changeMusicId } from '../../../store/index'
+import { musicStore } from '../../../store/index'
 import Button from '../../../components/button/index.vue'
 
 const { id } = useRoute().query;
@@ -23,7 +23,7 @@ getPlaylistTrack(id as string).then(res => {
 })
 
 const handleClick = (id: string) => {
-    changeMusicId(id);
+    musicStore.update().changeMusicId(id);
 }
 
 </script>
@@ -91,7 +91,8 @@ const handleClick = (id: string) => {
                             </li>
                         </ul>
                     </div>
-                    <p class="w-96">简介 : {{ playListState.playListDesc.playlist?.description }}</p>
+                    <p class="w-96 overflow-hidden truncate">简介 : {{ playListState.playListDesc.playlist?.description }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -120,7 +121,7 @@ const handleClick = (id: string) => {
                         <p class="text-gray-500">{{ index + 1 }}</p>
                         <HeartIcon class="w-4" fill="gray" />
                     </div>
-                    <p class=" col-span-3 2xl:col-span-4 px-4 overflow-hidden truncate">{{ n.name }}</p>
+                    <p class="cursor-pointer col-span-3 2xl:col-span-4 px-4 overflow-hidden truncate">{{ n.name }}</p>
                     <p class=" overflow-hidden col-span-2 2xl:col-span-3 px-4 truncate">{{ n.ar[0].name }}</p>
                     <p class=" overflow-hidden col-span-2 2xl:col-span-3 px-4 truncate">{{ n.al.name }}</p>
                     <p class=" overflow-hidden col-span-1 px-4">{{ getTime(n.dt) }}</p>

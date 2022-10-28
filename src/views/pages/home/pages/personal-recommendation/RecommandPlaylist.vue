@@ -2,20 +2,22 @@
 import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import { getDayHan } from '../../../../../utils/index'
-import { changeCurrentMenu } from '../../../../../store';
+import { homeMenuStore } from '../../../../../store';
 
 const router = useRouter()
+
 const props = defineProps<{
     recommands: any
 }>();
 
-// 推荐歌单
+// 推荐歌单: 跳转到指定的页面
 const handleClick = (id: string) => {
     router.push({ path: '/songlist-detail', query: { id } })
 }
 
 // 每日推荐
 console.log('每日推荐需要登陆');
+
 </script>
 
 <template>
@@ -23,7 +25,8 @@ console.log('每日推荐需要登陆');
     <div class="my-16">
         <div class=" py-6 pb-2 mb-2 flex border-b justify-between items-center">
             <h3 class="text-lg ">推荐歌单</h3>
-            <p @click="() => changeCurrentMenu('SongList')" class="text-xs text-gray-400 cursor-pointer">
+            <p @click="() => homeMenuStore.update().changeCurrentMenu('SongList')"
+                class="text-xs text-gray-400 cursor-pointer">
                 更多&gt;&gt;
             </p>
         </div>
