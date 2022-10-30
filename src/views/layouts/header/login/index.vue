@@ -7,10 +7,6 @@ import First from './first.vue';
 import Second from './second.vue';
 import Third from './third.vue';
 
-defineProps<{
-    show: boolean
-}>()
-
 const tabs = { First, Second, Third }
 
 const current = loginStore.data.current
@@ -19,7 +15,7 @@ const current = loginStore.data.current
 <template>
     <!-- 模态框 -->
     <Teleport to="body">
-        <Model :show="show" @close="$emit('close')" width="w-96">
+        <Model :show="loginStore.data.showModel.value" @close="loginStore.update().showModel.closeModel" width="w-96">
             <component :is="tabs[current]"></component>
         </Model>
     </Teleport>

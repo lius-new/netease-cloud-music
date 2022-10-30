@@ -4,15 +4,13 @@ import { ref, defineProps } from 'vue'
 import Login from './login/index.vue'
 
 import { ChevornLeftIcon, ChevornRightIcon, SearchIcon, UserIcon, ShiftIcon, GearIcon, MinusIcon, ExpandIcon, XmarkIcon } from '../../../components/icons'
+import { loginStore } from '../../../store';
 
 interface Ipops {
     title: string
 }
 
-const showModel = ref<boolean>(false);
-
 const props = defineProps<Ipops>();
-
 </script>
 
 <template>
@@ -55,7 +53,8 @@ const props = defineProps<Ipops>();
                 <ul class="w-full flex gap-x-6 items-center">
                     <li class="text-xs flex cursor-pointer gap-x-1">
                         <UserIcon width="16" fill="#DDD1C6" />
-                        <p @click="showModel = true" class=" flex items-end text-white">用户名</p>
+                        <p @click="loginStore.update().showModel.startModel()" class=" flex items-end text-white">
+                            用户名</p>
                     </li>
                     <li class=" cursor-pointer">
                         <ShiftIcon width="20" fill="#DDD1C6" />
@@ -81,6 +80,5 @@ const props = defineProps<Ipops>();
         </div>
     </header>
 
-    <Login :show="showModel" @close="showModel = false" />
-
+    <Login />
 </template>

@@ -12,10 +12,10 @@ import { loginStore } from '../../../../store/login-store'
             <p class="w-full border-t absolute"></p>
         </div>
         <div class="h-28 flex flex-col w-4/5 mx-auto gap-y-4 my-12">
-            <Button @click="loginStore.update().changeCurrent('Second')"
-                class="py-1.5 rounded-3xl border border-red-500 hover:bg-red-400 text-red-600">手机号登陆</Button>
-            <Button @click="loginStore.update().changeCurrent('Third')"
+            <button @click="loginStore.update().changeCurrent('Third')"
                 class="py-1.5 rounded-3xl border border-red-500 hover:bg-red-400 text-red-600">扫码登陆</Button>
+            <button @click="loginStore.update().changeCurrent('Second')"
+                class="py-1.5 rounded-3xl border border-red-500 hover:bg-red-400 text-red-600">邮箱登陆</Button>
         </div>
     </div>
 </template>
