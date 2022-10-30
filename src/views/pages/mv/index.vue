@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import FeaturedMv from './FeaturedMv.vue'
 import AllMv from './AllMv.vue'
 import MvTopList from './MvTopList.vue';
@@ -7,7 +8,7 @@ import { mvStore } from '../../../store/mv-store'
 const menu = ['Mv精选', '全部Mv']
 const tabs = { FeaturedMv, AllMv, MvTopList }
 
-const current = mvStore.data.current
+const current = computed<string>(() => mvStore.data.current);
 
 </script>
 

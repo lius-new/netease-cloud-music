@@ -35,6 +35,7 @@ import MusicNoteIcon from './MusicNoteIcon.vue'
 import CirclePlayIcon from './CirclePlayIcon.vue'
 import FolderPlusIcon from './FolderPlusIcon.vue'
 import ShareSquareIcon from './ShareSquareIcon.vue'
+import PhoneIcon from './PhoneIcon.vue'
 
 export {
   SearchIcon,
@@ -70,4 +71,5 @@ export {
   CirclePlayIcon,
   FolderPlusIcon,
   ShareSquareIcon,
+  PhoneIcon,
 }

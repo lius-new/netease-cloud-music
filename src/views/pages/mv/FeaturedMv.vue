@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, ref,watch } from 'vue'
+import { onBeforeMount, ref, watch } from 'vue'
 import { mvStore } from '../../../store/mv-store'
 import { getNewMv, getHotMv, getTopMv } from '../../../api/server/mv'
 

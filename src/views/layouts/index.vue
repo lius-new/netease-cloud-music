@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import config from '../../config'
 import { RouterView } from 'vue-router'
-import Header from './header.vue'
+import Header from './header/index.vue'
 import Footer from './footer.vue'
 import Left from './left.vue'
 

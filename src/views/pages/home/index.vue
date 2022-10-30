@@ -5,7 +5,6 @@ import NewMusic from './pages/NewMusic.vue'
 import PersonalRecommendation from './pages/personal-recommendation/index.vue'
 import Songer from './pages/Songer.vue'
 import SongList from './pages/song-list/index.vue'
-
 import { homeMenuStore } from '../../../store'
 
 const tabs = {

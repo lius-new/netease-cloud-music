@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { defineProps } from 'vue'
+import { ref, defineProps } from 'vue'
+import Login from './login/index.vue'
 
-import { ChevornLeftIcon, ChevornRightIcon, SearchIcon, UserIcon, ShiftIcon, GearIcon, MinusIcon, ExpandIcon, XmarkIcon } from '../../components/icons'
+import { ChevornLeftIcon, ChevornRightIcon, SearchIcon, UserIcon, ShiftIcon, GearIcon, MinusIcon, ExpandIcon, XmarkIcon } from '../../../components/icons'
 
 interface Ipops {
     title: string
 }
+
+const showModel = ref<boolean>(false);
 
 const props = defineProps<Ipops>();
 
@@ -20,10 +23,10 @@ const props = defineProps<Ipops>();
                 <div class="flex items-center gap-x-4">
                     <router-link to="/" class="flex">
                         <div class="flex  cursor-pointer">
-                            <img class="w-8 h-8" src="../../assets/logo-0.png" alt="">
+                            <img class="w-8 h-8" src="../../../assets/logo-0.png" alt="">
                         </div>
                         <p class="text-lg text-white cursor-pointer" :title="props.title">
-                            {{props.title}}
+                            {{ props.title }}
                         </p>
                     </router-link>
                 </div>
@@ -52,7 +55,7 @@ const props = defineProps<Ipops>();
                 <ul class="w-full flex gap-x-6 items-center">
                     <li class="text-xs flex cursor-pointer gap-x-1">
                         <UserIcon width="16" fill="#DDD1C6" />
-                        <p class=" flex items-end text-white">用户名</p>
+                        <p @click="showModel = true" class=" flex items-end text-white">用户名</p>
                     </li>
                     <li class=" cursor-pointer">
                         <ShiftIcon width="20" fill="#DDD1C6" />
@@ -77,4 +80,7 @@ const props = defineProps<Ipops>();
             </div>
         </div>
     </header>
+
+    <Login :show="showModel" @close="showModel = false" />
+
 </template>
