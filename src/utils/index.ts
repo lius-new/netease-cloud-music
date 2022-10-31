@@ -1,3 +1,4 @@
+import { Account } from '../typings/login'
 /**
  * 将1-7的字符转换为汉字版本
  * @param number
@@ -61,4 +62,29 @@ export function getTime(time: number) {
     ':' +
     (last.length <= 1 ? `0${last}` : last)
   )
+}
+
+/**
+ * 保存用户信息
+ */
+export function setAccount(account: any) {
+  // 依次存入
+  const keys = Object.keys(account)
+
+  for (let i = 0; i < keys.length; i++) {
+    localStorage.setItem(keys[i], account[keys[i]])
+  }
+}
+
+/**
+ * 获取用户信息
+ */
+export function getAccount() {
+  const id: string | null = localStorage.getItem('id')
+  const userName: string | null = localStorage.getItem('userName')
+
+  return {
+    id,
+    userName,
+  }
 }

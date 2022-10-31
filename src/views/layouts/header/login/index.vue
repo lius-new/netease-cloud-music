@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Teleport, defineProps, ref } from 'vue'
+import { Teleport } from 'vue'
 import { loginStore } from '../../../../store/login-store'
 import Model from '../../../../components/model/index.vue'
 

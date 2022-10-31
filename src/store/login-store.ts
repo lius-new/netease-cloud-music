@@ -1,8 +1,9 @@
-import { ref } from 'vue'
+import { watch, ref, computed, watchEffect } from 'vue'
+import { getAccount } from '../utils/index'
 
 export const loginStore = {
   data: {
-    isLogin: ref<boolean>(false), // 是否登陆
+    isLogin: ref<boolean>(false),
     showModel: ref<boolean>(false), // 是否显示登陆
     current: ref<string>('First'), // 当前选项页面
   },
@@ -21,14 +22,17 @@ export const loginStore = {
           _this.data.current.value = 'First'
         },
       },
-      login: {
-        isLoginTrue() {
-          _this.data.isLogin.value = true
-        },
-        isLoginFalse() {
-          _this.data.isLogin.value = false
+      isLogin: {
+        update() {
+          const { id, userName } = getAccount()
+          _this.data.isLogin.value = Boolean(id && userName)
         },
       },
     }
   },
 }
+
+watchEffect(() => {
+  const { id, userName } = getAccount()
+  loginStore.data.isLogin.value = Boolean(id && userName)
+})

@@ -17,7 +17,7 @@
         <div class="bottom-wrapper mx-auto w-1/2 my-20">
             <h3 class="text-lg border-b">听友评论</h3>
             <div class=" flex justify-center flex-col gap-y-4">
-                <div class="h-20 flex justify-center items-center bg-gray-200" v-for="n in 20">{{n}}</div>
+                <div class="h-20 flex justify-center items-center bg-gray-200" v-for="n in 20" :key="n">{{n}}</div>
             </div>
         </div>
     </div>

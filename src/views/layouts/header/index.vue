@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { ref, defineProps } from 'vue'
+import { defineProps, computed } from 'vue'
 import Login from './login/index.vue'
 
 import { ChevornLeftIcon, ChevornRightIcon, SearchIcon, UserIcon, ShiftIcon, GearIcon, MinusIcon, ExpandIcon, XmarkIcon } from '../../../components/icons'
@@ -9,8 +9,12 @@ import { loginStore } from '../../../store';
 interface Ipops {
     title: string
 }
-
 const props = defineProps<Ipops>();
+
+const userName = computed(() => {
+    return loginStore.data.isLogin.value ? localStorage.getItem('userName') : '用户名'
+})
+
 </script>
 
 <template>
@@ -54,7 +58,7 @@ const props = defineProps<Ipops>();
                     <li class="text-xs flex cursor-pointer gap-x-1">
                         <UserIcon width="16" fill="#DDD1C6" />
                         <p @click="loginStore.update().showModel.startModel()" class=" flex items-end text-white">
-                            用户名</p>
+                            {{ userName }}</p>
                     </li>
                     <li class=" cursor-pointer">
                         <ShiftIcon width="20" fill="#DDD1C6" />
@@ -79,6 +83,6 @@ const props = defineProps<Ipops>();
             </div>
         </div>
     </header>
-
-    <Login />
+    <!-- 什么时候展示， -->
+    <Login v-if="!loginStore.data.isLogin.value" />
 </template>

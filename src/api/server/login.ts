@@ -6,7 +6,7 @@ export const loginByEmail = async (email: string, passwd: string) => {
 }
 
 export const getLoginQrKey = async () => {
-  const resp = await api.get(`/login/qr/key`)
+  const resp = await api.get(`/login/qr/key?timerstamp=${Date.now()}`)
   return resp.data
 }
 
@@ -29,5 +29,6 @@ export async function getLoginStatus(cookie = '') {
       cookie,
     },
   })
+  return res.data
   // document.querySelector('#info').innerText = JSON.stringify(res.data, null, 2)
 }

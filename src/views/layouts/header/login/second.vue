@@ -3,6 +3,7 @@ import { ref, watch, Ref, computed } from 'vue'
 import { loginStore } from '../../../../store/login-store'
 import { EmailIcon } from '../../../../components/icons/index'
 import { loginByEmail } from '../../../../api/server/login'
+import { setAccount } from '../../../../utils/index'
 
 
 const email = ref<string>('')
@@ -21,8 +22,6 @@ const checkEmail = (email: Ref<string>): boolean => {
 }
 
 watch(email, () => {
-    console.log(checkEmail(email));
-
     if (!checkEmail(email)) {
         message.value = '请输入正确的邮箱'
     } else {
@@ -30,23 +29,26 @@ watch(email, () => {
     }
 })
 
-const loginClickHandler = () => {
+const loginClickHandler = async () => {
     let ok;
     isCanClickBtn.value = false
     // 登录
-    loginByEmail(email.value, passwd.value).then(res => {
+    await loginByEmail(email.value, passwd.value).then(res => {
         ok = res.code === 200 ? true : false;
+        if (ok) {
+            localStorage.setItem('cookie', res.cookie)
+            setAccount(res.account)
+        }
         return;
     })
-
     // 登录成功，关闭
     if (ok) {
-        loginStore.update().showModel.closeModel()
+        loginStore.update().showModel.closeModel();
+        loginStore.update().isLogin.update();
     } else {
         // 登录失败，提示信息
         message.value = '登录失败'
     }
-
 }
 
 

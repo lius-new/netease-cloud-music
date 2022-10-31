@@ -2,12 +2,11 @@
 import { ref, onBeforeMount } from 'vue'
 import { getLoginQrKey, getLoginQrCreate, checkStatus, getLoginStatus } from '../../../../api/server/login'
 import { loginStore } from '../../../../store/login-store'
-
+import { setAccount } from '../../../../utils';
 
 const url = ref<string>('')
 
 onBeforeMount(async () => {
-
     let timer: NodeJS.Timer;
     let key: string = '';
     await getLoginQrKey().then((res) => {
@@ -34,8 +33,11 @@ onBeforeMount(async () => {
             // 这一步会返回cookie
             clearInterval(timer)
             console.log('授权登录成功');
-            await getLoginStatus(statusRes.cookie)
+            const accountRes = await getLoginStatus(statusRes.cookie)
+            setAccount(accountRes.data.account)
             localStorage.setItem('cookie', statusRes.cookie)
+            loginStore.update().showModel.closeModel();
+            loginStore.update().isLogin.update();
         }
     }, 3000)
 
