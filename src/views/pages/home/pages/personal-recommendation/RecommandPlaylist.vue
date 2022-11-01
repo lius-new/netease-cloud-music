@@ -15,8 +15,12 @@ const handleClick = (id: string) => {
     router.push({ path: '/songlist-detail', query: { id } })
 }
 
-// 每日推荐
-console.log('每日推荐需要登陆');
+// 每日推荐，跳转
+const nextDayClickHandler = () => {
+    // 每日推荐
+    router.push({ path: '/everyday-recommend' })
+}
+
 
 </script>
 
@@ -39,8 +43,9 @@ console.log('每日推荐需要登陆');
                         <p class="my-2 text-xs text-left">{{ recommand.name }}</p>
                     </div>
                 </template>
-                <template v-else>
-                    <div class="bg-slate-50 w-full h-full flex flex-col justify-center items-center ">
+                <template v-else @click="nextDayClickHandler">
+                    <div @click="() => nextDayClickHandler()"
+                        class="bg-slate-50 w-full h-full flex flex-col justify-center items-center ">
                         <span class="text-xl text-gray-600">
                             星期{{ getDayHan(new Date().getDay() + '') }}
                         </span>
@@ -48,7 +53,7 @@ console.log('每日推荐需要登陆');
                             {{ new Date().getDate() }}
                         </span>
                     </div>
-                    <p class="my-2 text-xs text-left">
+                    <p @click="() => nextDayClickHandler()" class="my-2 text-xs text-left">
                         每日推荐
                     </p>
                 </template>

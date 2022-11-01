@@ -6,6 +6,7 @@ import MySonger from './mysonger/index.vue'
 import Lover from './lover/index.vue'
 import SongListDetail from './songlist-detail/index.vue'
 import PrivateSend from './private-send/index.vue'
+import EveryDayRecommend from './everyday-recommend/index.vue'
 
 const pages = {
   HomePages,
@@ -16,6 +17,7 @@ const pages = {
   Lover,
   SongListDetail,
   PrivateSend,
+  EveryDayRecommend,
 }
 
 export default pages

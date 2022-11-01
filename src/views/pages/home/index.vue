@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import AnchorStation from './pages/anchor-station/index.vue'
 import Leaderboard from './pages/leader-board/index.vue'
-import NewMusic from './pages/NewMusic.vue'
+import NewMusic from './pages/newmusic/index.vue'
+import Songer from './pages/songer/index.vue'
 import PersonalRecommendation from './pages/personal-recommendation/index.vue'
-import Songer from './pages/Songer.vue'
 import SongList from './pages/song-list/index.vue'
 import { homeMenuStore } from '../../../store'
 

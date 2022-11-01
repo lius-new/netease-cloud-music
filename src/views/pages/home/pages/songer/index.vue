@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import api from "../../../../api/index";
+import api from "../../../../../api/index";
 
 const tags1 = ['全部', '华语', '欧美', '日本', '韩国', '其他']
 const tags2 = ['全部', '男歌手', '女歌手', '乐队组合']

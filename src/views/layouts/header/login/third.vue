@@ -32,12 +32,11 @@ onBeforeMount(async () => {
         if (statusRes.code === 803) {
             // 这一步会返回cookie
             clearInterval(timer)
-            console.log('授权登录成功');
             const accountRes = await getLoginStatus(statusRes.cookie)
             setAccount(accountRes.data.account)
             localStorage.setItem('cookie', statusRes.cookie)
-            loginStore.update().showModel.closeModel();
             loginStore.update().isLogin.update();
+            loginStore.update().showModel.closeModel();
         }
     }, 3000)
 

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-
-import { computed, ref } from "vue";
-import api from "../../../../api/index";
+import { ref } from "vue";
+import api from "../../../../../api/index";
 const tags = ['全部', '华语', '欧美', '韩国', '日本']
 
 const albumList = ref<any>([]);

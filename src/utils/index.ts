@@ -52,6 +52,7 @@ export function getYearMonthDay(date: Date) {
  * 将一串数字转换而获取音乐的时长
  */
 export function getTime(time: number) {
+  
   let tem = Math.round(time / 1000)
 
   let first = '' + Math.round(tem / 60)

@@ -1,5 +1,5 @@
 import { watch, ref } from 'vue'
-import { musicStore } from './music-store'
+import { getTime } from '../utils/index'
 
 export const audioStore = {
   data: {
@@ -7,7 +7,7 @@ export const audioStore = {
     message: ref<any>(''), // 歌曲是否可用的信息
     url: ref<string>(''), // 当前播放音乐的url
     toggle: ref<boolean>(false), // 播放音乐图标
-    volume: ref<number>(20), // 声量
+    volume: ref<number>(10), // 声量
     progress: ref<number>(0), // 进度条进度
     time: ref<number>(0), // 歌曲时长
     audio: ref<HTMLAudioElement | null>(null), // audio的元素
@@ -40,6 +40,10 @@ export const audioStore = {
         updateVolume(v: number) {
           _this.data.volume.value = v
         },
+        initVolume() {
+          _this.data.volume.value = 10 // 长度
+          _this.data.audio.value!.volume = 10 / 100 // 实际上的音量
+        },
       },
       progress: {
         // 控制进度条
@@ -55,9 +59,11 @@ export const audioStore = {
       audio: {
         start() {
           _this.data.audio.value?.play()
+          _this.data.toggle.value = true
         },
         stop() {
           _this.data.audio.value?.pause()
+          _this.data.toggle.value = false
         },
       },
     }
@@ -69,11 +75,4 @@ watch(audioStore.data.volume, () => {
   const { audio, volume } = audioStore.data
   if (!audio.value) return
   audio.value!.volume = volume.value / 100
-})
-
-// 进度条发生变化
-watch(audioStore.data.progress, () => {
-  const { audio, progress, time } = audioStore.data
-  if (!audio.value) return
-  audio.value!.currentTime = (progress.value / 100) * time.value
 })

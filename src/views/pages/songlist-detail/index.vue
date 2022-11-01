@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// 歌单详情
 import { reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { formatWanToTenThousand, getYearMonthDay, getTime } from '../../../utils/index'

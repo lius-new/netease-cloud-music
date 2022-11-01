@@ -53,6 +53,11 @@ const PageInnerRoutes: IRoute[] = [
     component: pages.PrivateSend,
     text: '独家放松',
   },
+  {
+    path: '/everyday-recommend',
+    component: pages.EveryDayRecommend,
+    text: '每日推荐',
+  },
 ]
 
 // 查看所有的图标
