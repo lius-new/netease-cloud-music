@@ -57,12 +57,25 @@ export const audioStore = {
         },
       },
       audio: {
+        onupdatTimeEvent() {
+          _this.data.audio.value!.ontimeupdate = function () {
+            _this.data.progress.value =
+              _this.data.audio.value!.currentTime /
+              _this.data.audio.value!.duration
+          }
+        },
+        removeupdatTimeEvent() {
+          // 移除事件
+          _this.data.audio.value!.ontimeupdate = function () {}
+        },
         start() {
           _this.data.audio.value?.play()
+          _this.update().audio.onupdatTimeEvent()
           _this.data.toggle.value = true
         },
         stop() {
           _this.data.audio.value?.pause()
+          _this.update().audio.removeupdatTimeEvent()
           _this.data.toggle.value = false
         },
       },
@@ -72,7 +85,9 @@ export const audioStore = {
 
 // 声音发生变化
 watch(audioStore.data.volume, () => {
+  // 获取的是一个百分比,
   const { audio, volume } = audioStore.data
   if (!audio.value) return
-  audio.value!.volume = volume.value / 100
+  const currentVolume = Math.floor(volume.value * 100) / 100 // 有可能超过1
+  audio.value!.volume = currentVolume > 1 ? 1 : currentVolume
 })
